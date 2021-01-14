@@ -41,26 +41,23 @@ function init() {
   // Get the current date
   let date = new Date();
   let today = date.getDate() + ' ' + monthNames[(date.getMonth())] + ' ' + date.getFullYear();
+
   // Write in the UI the date
   document.querySelector('#date').innerHTML = today;
 
-  let dates = [];
+  // Get the following 8 hours and update the UI with the correct time
 
-  // Get the following 4 days date
-  let first = new Date(date.getTime() + (24 * 60 * 60 * 1000));
-  let second = new Date(first.getTime() + (24 * 60 * 60 * 1000));
-  let third = new Date(second.getTime() + (24 * 60 * 60 * 1000));
-  let forth = new Date(third.getTime() + (24 * 60 * 60 * 1000));
-  dates.push(first, second, third, forth)
+  let two = new Date(new Date().getTime() + 2 * 60 * 60 * 1000).toLocaleTimeString()
+  document.getElementById("two-time").innerText = `${two.slice(0, 2)} : `
+  let four = new Date(new Date().getTime() + 4 * 60 * 60 * 1000).toLocaleTimeString()
+  document.getElementById("four-time").innerText = `${four.slice(0, 2)} : `
+  let six = new Date(new Date().getTime() + 6 * 60 * 60 * 1000).toLocaleTimeString()
+  document.getElementById("six-time").innerText = `${six.slice(0, 2)} : `
+  let eight = new Date(new Date().getTime() + 8 * 60 * 60 * 1000).toLocaleTimeString()
+  document.getElementById("eight-time").innerText = `${eight.slice(0, 2)} : `
 
-  // get all the forecast divs
-  const forecastUiDates = document.querySelectorAll('.day')
   // console.log(forecastUiDates)
 
-  forecastUiDates.forEach((div, index) => {
-    let writeForecastDate = dates[index].getDate() + ' ' + monthNames[(dates[index].getMonth())] + ' ' + dates[index].getFullYear()
-    div.firstElementChild.innerHTML = writeForecastDate;
-  })
 
 }
 
@@ -71,18 +68,27 @@ function setCity(e) {
   if (e.keyCode == 13) {
     let city = search.value.trim()
     getDataToday(city)
+
   }
 }
 
+// Get the data when a city is searched
 function getDataToday(input) {
   fetch(`${api.base}/data/2.5/weather?q=${input}&units=metric&appid=${api.key}`)
     .then(weather => {
       return weather.json();
-    }).then(results);
+    }).then(weather => {
+      results(weather)
+      let lat = weather.coord.lat
+      let long = weather.coord.lon;
+      fetch(`${api.base}/data/2.5/onecall?lat=${lat}&lon=${long}&exclude=minutely,daily,alerts&units=metric&appid=${api.key}`)
+        .then(data => {
+          return data.json()
+        }).then(forecast)
+    });
 }
 
 function results(weather) {
-
   console.log(weather)
   const uiCity = document.getElementById('city')
   uiCity.innerText = `${weather.name} `;
@@ -101,17 +107,27 @@ function results(weather) {
   uiVisibility.innerText = `${weather.visibility / 1000} km`;
 
 
-
-  updateUi(weather)
+  // updateUi(weather)
 
 }
 
 function forecast(data) {
-  console.log(data)
+
+  const uiTwo = document.getElementById("two-deg");
+  uiTwo.innerText = `${Math.round(data.hourly[1].temp)}`
+
+  const uiFour = document.getElementById("four-deg")
+  uiFour.innerText = `${Math.round(data.hourly[3].temp)}`
+
+  const uiSix = document.getElementById("six-deg")
+  uiSix.innerText = `${Math.round(data.hourly[5].temp)}`
+
+  const uiEight = document.getElementById("eight-deg")
+  uiEight.innerText = `${Math.round(data.hourly[7].temp)}`
 }
 
-function updateUi(data) {
+// function updateUi(data) {
 
-  // console.log(data)
+//   // console.log(data)
 
-}
+// }
