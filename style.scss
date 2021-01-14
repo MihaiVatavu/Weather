@@ -1,0 +1,85 @@
+
+$background-color:#1D1D1D;
+$hot-color:#F44236;
+$warm-color:#95980D;
+$cold-color:#6E9EFF;
+$freezing-color:#0052B4;
+$text-color:#f0f0f0;
+
+*{
+  margin: 0%;
+  padding: 0%;
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+}
+
+body{
+  overflow-x: hidden;
+  background-color:$background-color;
+  color:$text-color;
+}
+
+
+// Header 
+.head{
+  width:90%;
+  height:20vh;
+  display:flex;
+  justify-content:space-between;
+  padding:20px;
+  padding-left:50px;
+  margin:20px auto;
+  position:relative;
+}
+
+#search{
+  max-width:250px;
+  height:50%;
+  font-size:25px;
+  background-color: $background-color;
+  color: #f0f0f0;
+  outline:none;
+  border:0px solid;
+  border-bottom:3px solid $text-color;
+  padding:10px;
+  
+  align-self: flex-end;
+}
+
+#date{
+  max-width:250px;
+  height:50%;
+  font-size:25px;
+  color:$text-color;
+  align-self:center;
+
+}
+
+.sun{
+position: absolute;
+width: 196px;
+height: 190px;
+left: -200px;
+top: -150px;
+border-radius: 50%;
+background: #F44236;
+mix-blend-mode: normal;
+box-shadow: 20px 20px 100px 200px rgba(244, 66, 54, 0.35);
+}
+
+
+// Main section
+
+main{
+  position:relative;
+  width:90%;
+  height:50vh;
+  margin:0 auto;
+
+}
+
+.title{
+  font-size:125px;
+  font-weight: 300;
+  padding-left:50px;
+}
