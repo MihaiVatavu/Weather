@@ -14,16 +14,17 @@ $text-color:#f0f0f0;
 }
 
 body{
-  overflow-x: hidden;
+  overflow: hidden;
   background-color:$background-color;
   color:$text-color;
+  position:relative;
 }
 
 
 // Header 
 .head{
   width:90%;
-  height:20vh;
+  height:15vh;
   display:flex;
   justify-content:space-between;
   padding:20px;
@@ -82,4 +83,49 @@ main{
   font-size:125px;
   font-weight: 300;
   padding-left:50px;
+
+  #city{
+    color:$hot-color;
+  }
+}
+
+.temperatures{
+  position: relative;
+  width:100%;
+  height: 100%;
+  padding:20px 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  font-size:45px;
+
+  .now,.extremes,.conditions,.forecast{
+    width:22%;
+    text-align: center;
+
+    h2{
+      font-weight: 300;
+      padding:10px;
+    }
+  }
+
+  .forecast p{
+    padding:10px;
+  }
+}
+
+
+// Footer
+.svg-wrapper{
+  position:absolute;
+  width:100%;
+  height:5vh;
+  left:12.5%;
+  bottom:25%;
+
+  img{
+    width:100%;
+    height:auto;
+    
+  }
 }

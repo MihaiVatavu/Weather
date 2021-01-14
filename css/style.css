@@ -7,14 +7,15 @@
 }
 
 body {
-  overflow-x: hidden;
+  overflow: hidden;
   background-color: #1D1D1D;
   color: #f0f0f0;
+  position: relative;
 }
 
 .head {
   width: 90%;
-  height: 20vh;
+  height: 15vh;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -75,4 +76,52 @@ main {
   font-size: 125px;
   font-weight: 300;
   padding-left: 50px;
+}
+
+.title #city {
+  color: #F44236;
+}
+
+.temperatures {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 20px 50px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  font-size: 45px;
+}
+
+.temperatures .now, .temperatures .extremes, .temperatures .conditions, .temperatures .forecast {
+  width: 22%;
+  text-align: center;
+}
+
+.temperatures .now h2, .temperatures .extremes h2, .temperatures .conditions h2, .temperatures .forecast h2 {
+  font-weight: 300;
+  padding: 10px;
+}
+
+.temperatures .forecast p {
+  padding: 10px;
+}
+
+.svg-wrapper {
+  position: absolute;
+  width: 100%;
+  height: 5vh;
+  left: 12.5%;
+  bottom: 25%;
+}
+
+.svg-wrapper img {
+  width: 100%;
+  height: auto;
 }
