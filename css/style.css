@@ -78,10 +78,6 @@ main {
   padding-left: 50px;
 }
 
-.title #city {
-  color: #F44236;
-}
-
 .temperatures {
   position: relative;
   width: 100%;
@@ -124,4 +120,20 @@ main {
 .svg-wrapper img {
   width: 100%;
   height: auto;
+}
+
+.hot {
+  color: #F44236;
+}
+
+.warm {
+  color: #fbff00;
+}
+
+.cold {
+  color: #6E9EFF;
+}
+
+.freezing {
+  color: #0052B4;
 }

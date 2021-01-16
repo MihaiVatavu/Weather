@@ -47,30 +47,40 @@ function init() {
 
   // Get the following 8 hours and update the UI with the correct time
 
-  let two = new Date(new Date().getTime() + 2 * 60 * 60 * 1000).toLocaleTimeString()
-  document.getElementById("two-time").innerText = `${two.slice(0, 2)} : `
-  let four = new Date(new Date().getTime() + 4 * 60 * 60 * 1000).toLocaleTimeString()
-  document.getElementById("four-time").innerText = `${four.slice(0, 2)} : `
-  let six = new Date(new Date().getTime() + 6 * 60 * 60 * 1000).toLocaleTimeString()
-  document.getElementById("six-time").innerText = `${six.slice(0, 2)} : `
-  let eight = new Date(new Date().getTime() + 8 * 60 * 60 * 1000).toLocaleTimeString()
-  document.getElementById("eight-time").innerText = `${eight.slice(0, 2)} : `
-
-  // console.log(forecastUiDates)
+  let two = new Date(new Date().getTime() + 2 * 60 * 60 * 1000).toLocaleTimeString('en-GB', { hour: 'numeric', hour24: true })
+  document.getElementById("two-time").innerText = `${two.slice(0, 2)}`
+  let four = new Date(new Date().getTime() + 4 * 60 * 60 * 1000).toLocaleTimeString('en-GB', { hour: 'numeric', hour24: true })
+  document.getElementById("four-time").innerText = `${four.slice(0, 2)}`
+  let six = new Date(new Date().getTime() + 6 * 60 * 60 * 1000).toLocaleTimeString('en-GB', { hour: 'numeric', hour24: true })
+  document.getElementById("six-time").innerText = `${six.slice(0, 2)}`
+  let eight = new Date(new Date().getTime() + 8 * 60 * 60 * 1000).toLocaleTimeString('en-GB', { hour: 'numeric', hour24: true })
+  document.getElementById("eight-time").innerText = `${eight.slice(0, 2)}`
 
 
-}
+  const search = document.querySelector('#search')
+  search.addEventListener('keypress', setCity)
 
-const search = document.querySelector('#search')
-search.addEventListener('keypress', setCity)
+  function setCity(e) {
+    if (e.keyCode == 13) {
+      let city = search.value.trim()
+      getDataToday(city)
 
-function setCity(e) {
-  if (e.keyCode == 13) {
-    let city = search.value.trim()
-    getDataToday(city)
-
+    }
   }
+
+  // const forecast = document.querySelector(".forecast")
+  // console.log(forecast)
+
+  // const formatHours = time.toLocaleString('en-US', { hour: 'numeric', hour12: true })
+
+
+  // Get all the am/pm class elements
+
+  // })
+
 }
+
+
 
 // Get the data when a city is searched
 function getDataToday(input) {
@@ -84,12 +94,14 @@ function getDataToday(input) {
       fetch(`${api.base}/data/2.5/onecall?lat=${lat}&lon=${long}&exclude=minutely,daily,alerts&units=metric&appid=${api.key}`)
         .then(data => {
           return data.json()
-        }).then(forecast)
+        }).then((data) => {
+          forecast(data)
+        })
     });
 }
 
 function results(weather) {
-  console.log(weather)
+  // console.log(weather)
   const uiCity = document.getElementById('city')
   uiCity.innerText = `${weather.name} `;
   const uiCurrent = document.getElementById('now-weather');
@@ -106,13 +118,12 @@ function results(weather) {
   const uiVisibility = document.getElementById('vis');
   uiVisibility.innerText = `${weather.visibility / 1000} km`;
 
-
-  // updateUi(weather)
-
+  updateCityColor(weather)
+  updateTempUi()
+  // currentTempUiNow()
 }
 
 function forecast(data) {
-
   const uiTwo = document.getElementById("two-deg");
   uiTwo.innerText = `${Math.round(data.hourly[1].temp)}`
 
@@ -124,10 +135,58 @@ function forecast(data) {
 
   const uiEight = document.getElementById("eight-deg")
   uiEight.innerText = `${Math.round(data.hourly[7].temp)}`
+
+  updateTempUi()
+
 }
 
-// function updateUi(data) {
+function updateTempUi() {
 
-//   // console.log(data)
+  let allDeg = document.querySelectorAll(".deg")
+  let arrayAllDeg = Array.from(allDeg);
+  arrayAllDeg.forEach(item => {
+    console.log(item)
+    if (item.innerText >= 20) {
+      item.className = "deg"
+      item.classList.add("hot")
+    } else if (item.innerText >= 0 && item.innerText < 20) {
+      item.className = "deg"
+      item.classList.add("warm")
+    } else if (item.innerText < 0 && item.innerText >= -10) {
+      item.className = "deg"
+      item.classList.add("cold")
+    } else if (item.innerText < -10) {
+      item.className = "deg"
+      item.classList.add("freezing")
+    }
+  })
+  console.log(arrayAllDeg)
+}
 
-// }
+
+function updateCityColor(data) {
+  const moods = ["melting", "warm", "cold", "freezing"];
+  let moodUi = document.getElementById("word")
+  const city = document.getElementById("city")
+  if (Math.round(data.main.temp) > 20) {
+    city.className = "hot"
+    moodUi.innerText = moods[0]
+  } else if (Math.round(data.main.temp) >= 0 && Math.round(data.main.temp) <= 20) {
+    city.className = "warm"
+    moodUi.innerText = moods[1]
+  } else if (Math.round(data.main.temp) < 0 && Math.round(data.main.temp) >= -10) {
+    city.className = "cold"
+    moodUi.innerText = moods[2]
+  } else {
+    city.className = "freezing"
+    moodUi.innerText = moods[3]
+  }
+
+}
+
+function currentTempUiNow() {
+  let currentDiv = document.querySelector(".now")
+  console.log(currentDiv)
+  let elements = currentDiv.querySelectorAll(".deg")
+  console.log(elements)
+}

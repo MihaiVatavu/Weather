@@ -1,7 +1,7 @@
 
 $background-color:#1D1D1D;
 $hot-color:#F44236;
-$warm-color:#95980D;
+$warm-color:#fbff00;
 $cold-color:#6E9EFF;
 $freezing-color:#0052B4;
 $text-color:#f0f0f0;
@@ -22,7 +22,7 @@ body{
 
 
 // Header 
-.head{
+.head{  
   width:90%;
   height:15vh;
   display:flex;
@@ -85,7 +85,7 @@ main{
   padding-left:50px;
 
   #city{
-    color:$hot-color;
+    // color:$hot-color;
   }
 }
 
@@ -128,4 +128,20 @@ main{
     height:auto;
     
   }
+}
+
+.hot{
+ color:$hot-color;
+}
+
+.warm{
+color:$warm-color;
+}
+
+.cold{
+color:$cold-color;
+}
+
+.freezing{
+color:$freezing-color;
 }
