@@ -1,7 +1,8 @@
 
 $background-color:#1D1D1D;
 $hot-color:#F44236;
-$warm-color:#fbff00;
+$warm-color:#ff7400;
+$okay-color:#ffc100;
 $cold-color:#6E9EFF;
 $freezing-color:#0052B4;
 $text-color:#f0f0f0;
@@ -14,10 +15,11 @@ $text-color:#f0f0f0;
 }
 
 body{
-  overflow: hidden;
   background-color:$background-color;
   color:$text-color;
   position:relative;
+  text-shadow: 5px 5px 5px black;
+  overflow: hidden;
 }
 
 
@@ -56,18 +58,14 @@ body{
 
 }
 
-.sun{
-position: absolute;
-width: 196px;
-height: 190px;
-left: -200px;
-top: -150px;
-border-radius: 50%;
-background: #F44236;
-mix-blend-mode: normal;
-box-shadow: 20px 20px 100px 200px rgba(244, 66, 54, 0.35);
-}
+#clock{
+  max-width:250px;
+  height:50%;
+  font-size:25px;
+  color:$text-color;
+  align-self:center;
 
+}
 
 // Main section
 
@@ -80,7 +78,7 @@ main{
 }
 
 .title{
-  font-size:125px;
+  font-size:11em;
   font-weight: 300;
   padding-left:50px;
 
@@ -94,39 +92,24 @@ main{
   width:100%;
   height: 100%;
   padding:20px 50px;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  font-size:45px;
-
-  .now,.extremes,.conditions,.forecast{
-    width:22%;
-    text-align: center;
-
-    h2{
-      font-weight: 300;
-      padding:10px;
-    }
-  }
-
-  .forecast p{
-    padding:10px;
-  }
+  margin:0 auto;
+  font-size:4em;
+  
 }
-
 
 // Footer
 .svg-wrapper{
-  position:absolute;
-  width:100%;
-  height:5vh;
-  left:12.5%;
-  bottom:25%;
+  // position:absolute;
+  min-width:100%;
+  height:auto;
+  opacity:0.4;
+  z-index:-10;
 
-  img{
-    width:100%;
+   object{
+    min-width:100%;
     height:auto;
-    
+    transition: width 2s linear;
+   
   }
 }
 
@@ -144,4 +127,94 @@ color:$cold-color;
 
 .freezing{
 color:$freezing-color;
+}
+
+.okay{
+  color:$okay-color
+}
+
+
+@media all and (max-width:1024px){
+  body{
+    overflow-x: hidden;
+    overflow-y: scroll;
+    text-align: center;
+
+
+
+    .title{
+      font-size:8em;
+      margin:1em auto;
+    }
+
+    .temperatures{
+      font-size: 3em;
+    }
+  }
+
+
+}
+
+
+@media all and (max-width:768px){
+.svg-wrapper object{
+        display: none;
+      }
+      
+}
+
+
+@media all and (max-width:521px){
+
+  body{
+    font-size:12px;
+    text-align: center;
+    .head{
+      height:25vh;
+      width:100%;
+      display:flex;
+      flex-direction: column;
+      align-items:center;
+      text-align: center;
+  
+      #search{
+        width:85%;
+        height:50%;
+        font-size:25px;
+        background-color: $background-color;
+        color: #f0f0f0;
+        outline:none;
+        border:0px solid;
+        border-bottom:3px solid $text-color;
+        margin:5px auto;
+        text-align: center;
+      }
+      
+      #date{
+        width:85%;
+        height:50%;
+        font-size:25px;
+        color:$text-color;
+        margin:5px auto;
+      
+      }
+      
+      #clock{
+        width:85%;
+        height:50%;
+        font-size:35px;
+        color:$text-color;
+        margin:5px auto;
+      }
+    }
+
+    .title{
+      font-size:5em;
+      margin:0.6em auto;
+    }
+
+
+    
+  }
+  
 }

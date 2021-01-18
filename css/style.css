@@ -7,10 +7,11 @@
 }
 
 body {
-  overflow: hidden;
   background-color: #1D1D1D;
   color: #f0f0f0;
   position: relative;
+  text-shadow: 5px 5px 5px black;
+  overflow: hidden;
 }
 
 .head {
@@ -52,17 +53,14 @@ body {
       align-self: center;
 }
 
-.sun {
-  position: absolute;
-  width: 196px;
-  height: 190px;
-  left: -200px;
-  top: -150px;
-  border-radius: 50%;
-  background: #F44236;
-  mix-blend-mode: normal;
-  -webkit-box-shadow: 20px 20px 100px 200px rgba(244, 66, 54, 0.35);
-          box-shadow: 20px 20px 100px 200px rgba(244, 66, 54, 0.35);
+#clock {
+  max-width: 250px;
+  height: 50%;
+  font-size: 25px;
+  color: #f0f0f0;
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
 }
 
 main {
@@ -73,7 +71,7 @@ main {
 }
 
 .title {
-  font-size: 125px;
+  font-size: 11em;
   font-weight: 300;
   padding-left: 50px;
 }
@@ -83,43 +81,22 @@ main {
   width: 100%;
   height: 100%;
   padding: 20px 50px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  -webkit-box-align: start;
-      -ms-flex-align: start;
-          align-items: flex-start;
-  font-size: 45px;
-}
-
-.temperatures .now, .temperatures .extremes, .temperatures .conditions, .temperatures .forecast {
-  width: 22%;
-  text-align: center;
-}
-
-.temperatures .now h2, .temperatures .extremes h2, .temperatures .conditions h2, .temperatures .forecast h2 {
-  font-weight: 300;
-  padding: 10px;
-}
-
-.temperatures .forecast p {
-  padding: 10px;
+  margin: 0 auto;
+  font-size: 4em;
 }
 
 .svg-wrapper {
-  position: absolute;
-  width: 100%;
-  height: 5vh;
-  left: 12.5%;
-  bottom: 25%;
+  min-width: 100%;
+  height: auto;
+  opacity: 0.4;
+  z-index: -10;
 }
 
-.svg-wrapper img {
-  width: 100%;
+.svg-wrapper object {
+  min-width: 100%;
   height: auto;
+  -webkit-transition: width 2s linear;
+  transition: width 2s linear;
 }
 
 .hot {
@@ -127,7 +104,7 @@ main {
 }
 
 .warm {
-  color: #fbff00;
+  color: #ff7400;
 }
 
 .cold {
@@ -136,4 +113,81 @@ main {
 
 .freezing {
   color: #0052B4;
+}
+
+.okay {
+  color: #ffc100;
+}
+
+@media all and (max-width: 1024px) {
+  body {
+    overflow-x: hidden;
+    overflow-y: scroll;
+    text-align: center;
+  }
+  body .title {
+    font-size: 8em;
+    margin: 1em auto;
+  }
+  body .temperatures {
+    font-size: 3em;
+  }
+}
+
+@media all and (max-width: 768px) {
+  .svg-wrapper object {
+    display: none;
+  }
+}
+
+@media all and (max-width: 521px) {
+  body {
+    font-size: 12px;
+    text-align: center;
+  }
+  body .head {
+    height: 25vh;
+    width: 100%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    text-align: center;
+  }
+  body .head #search {
+    width: 85%;
+    height: 50%;
+    font-size: 25px;
+    background-color: #1D1D1D;
+    color: #f0f0f0;
+    outline: none;
+    border: 0px solid;
+    border-bottom: 3px solid #f0f0f0;
+    margin: 5px auto;
+    text-align: center;
+  }
+  body .head #date {
+    width: 85%;
+    height: 50%;
+    font-size: 25px;
+    color: #f0f0f0;
+    margin: 5px auto;
+  }
+  body .head #clock {
+    width: 85%;
+    height: 50%;
+    font-size: 35px;
+    color: #f0f0f0;
+    margin: 5px auto;
+  }
+  body .title {
+    font-size: 5em;
+    margin: 0.6em auto;
+  }
 }

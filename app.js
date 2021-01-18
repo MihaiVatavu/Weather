@@ -37,26 +37,6 @@ window.addEventListener('load', () => {
 
 
 function init() {
-
-  // Get the current date
-  let date = new Date();
-  let today = date.getDate() + ' ' + monthNames[(date.getMonth())] + ' ' + date.getFullYear();
-
-  // Write in the UI the date
-  document.querySelector('#date').innerHTML = today;
-
-  // Get the following 8 hours and update the UI with the correct time
-
-  let two = new Date(new Date().getTime() + 2 * 60 * 60 * 1000).toLocaleTimeString('en-GB', { hour: 'numeric', hour24: true })
-  document.getElementById("two-time").innerText = `${two.slice(0, 2)}`
-  let four = new Date(new Date().getTime() + 4 * 60 * 60 * 1000).toLocaleTimeString('en-GB', { hour: 'numeric', hour24: true })
-  document.getElementById("four-time").innerText = `${four.slice(0, 2)}`
-  let six = new Date(new Date().getTime() + 6 * 60 * 60 * 1000).toLocaleTimeString('en-GB', { hour: 'numeric', hour24: true })
-  document.getElementById("six-time").innerText = `${six.slice(0, 2)}`
-  let eight = new Date(new Date().getTime() + 8 * 60 * 60 * 1000).toLocaleTimeString('en-GB', { hour: 'numeric', hour24: true })
-  document.getElementById("eight-time").innerText = `${eight.slice(0, 2)}`
-
-
   const search = document.querySelector('#search')
   search.addEventListener('keypress', setCity)
 
@@ -68,15 +48,9 @@ function init() {
     }
   }
 
-  // const forecast = document.querySelector(".forecast")
-  // console.log(forecast)
+  setCurrentDate()
 
-  // const formatHours = time.toLocaleString('en-US', { hour: 'numeric', hour12: true })
-
-
-  // Get all the am/pm class elements
-
-  // })
+  updateTimeForForecast()
 
 }
 
@@ -101,29 +75,35 @@ function getDataToday(input) {
 }
 
 function results(weather) {
-  // console.log(weather)
+
   const uiCity = document.getElementById('city')
   uiCity.innerText = `${weather.name} `;
+
   const uiCurrent = document.getElementById('now-weather');
   uiCurrent.innerText = `${Math.round(weather.main.temp)}`;
+
   const uiRealFeel = document.getElementById("real-feel");
   uiRealFeel.innerText = `${Math.round(weather.main.feels_like)}`
+
   const uiMin = document.getElementById('min');
   uiMin.innerText = `${Math.round(weather.main.temp_min)}`;
+
   const uiMax = document.getElementById('max');
   uiMax.innerText = `${Math.round(weather.main.temp_max)}`
-  // Change wether condition text
+
   const uiWind = document.getElementById('wind');
   uiWind.innerText = `${weather.wind.speed} km/h`;
+
   const uiVisibility = document.getElementById('vis');
   uiVisibility.innerText = `${weather.visibility / 1000} km`;
 
   updateCityColor(weather)
   updateTempUi()
-  // currentTempUiNow()
+
 }
 
 function forecast(data) {
+
   const uiTwo = document.getElementById("two-deg");
   uiTwo.innerText = `${Math.round(data.hourly[1].temp)}`
 
@@ -136,6 +116,7 @@ function forecast(data) {
   const uiEight = document.getElementById("eight-deg")
   uiEight.innerText = `${Math.round(data.hourly[7].temp)}`
 
+  setForecastTime(data)
   updateTempUi()
 
 }
@@ -145,14 +126,17 @@ function updateTempUi() {
   let allDeg = document.querySelectorAll(".deg")
   let arrayAllDeg = Array.from(allDeg);
   arrayAllDeg.forEach(item => {
-    console.log(item)
     if (item.innerText >= 20) {
       item.className = "deg"
       item.classList.add("hot")
-    } else if (item.innerText >= 0 && item.innerText < 20) {
+    } else if (item.innerText >= 10 && item.innerText < 20) {
       item.className = "deg"
       item.classList.add("warm")
-    } else if (item.innerText < 0 && item.innerText >= -10) {
+    } else if (item.innerText >= 0 && item.innerText < 10) {
+      item.className = "deg"
+      item.classList.add("okay")
+    }
+    else if (item.innerText < 0 && item.innerText >= -10) {
       item.className = "deg"
       item.classList.add("cold")
     } else if (item.innerText < -10) {
@@ -160,33 +144,93 @@ function updateTempUi() {
       item.classList.add("freezing")
     }
   })
-  console.log(arrayAllDeg)
 }
 
 
 function updateCityColor(data) {
-  const moods = ["melting", "warm", "cold", "freezing"];
+
+  const moods = ["melting", "warm", "okay", "cold", "freezing"];
   let moodUi = document.getElementById("word")
   const city = document.getElementById("city")
+  const img = document.getElementById("img")
+
   if (Math.round(data.main.temp) > 20) {
     city.className = "hot"
     moodUi.innerText = moods[0]
-  } else if (Math.round(data.main.temp) >= 0 && Math.round(data.main.temp) <= 20) {
+    img.setAttribute("data", `/assets/${moods[0]}.svg`)
+  } else if (Math.round(data.main.temp) >= 10 && Math.round(data.main.temp) <= 20) {
     city.className = "warm"
     moodUi.innerText = moods[1]
+    img.setAttribute("data", `/assets/${moods[1]}.svg`)
+  } else if (Math.round(data.main.temp) >= 0 && Math.round(data.main.temp) < 10) {
+    city.className = "okay"
+    moodUi.innerText = moods[2]
+    img.setAttribute("data", `/assets/${moods[2]}.svg`)
   } else if (Math.round(data.main.temp) < 0 && Math.round(data.main.temp) >= -10) {
     city.className = "cold"
-    moodUi.innerText = moods[2]
+    moodUi.innerText = moods[3]
+    img.setAttribute("data", `/assets/${moods[3]}.svg`)
   } else {
     city.className = "freezing"
-    moodUi.innerText = moods[3]
+    moodUi.innerText = moods[4]
+    img.setAttribute("data", `/assets/${moods[4]}.svg`)
   }
 
 }
 
-function currentTempUiNow() {
-  let currentDiv = document.querySelector(".now")
-  console.log(currentDiv)
-  let elements = currentDiv.querySelectorAll(".deg")
-  console.log(elements)
+function setForecastTime(data) {
+
+  const timezone = data.timezone_offset
+
+  const howManyHours = timezone / 3600;
+
+  const plusTwo = howManyHours + 2;
+  const plusFour = howManyHours + 4;
+  const plusSix = howManyHours + 6;
+  const plusEight = howManyHours + 8;
+
+  let two = new Date(new Date().getTime() + plusTwo * 60 * 60 * 1000).toLocaleTimeString('en-GB', { timeStyle: 'short' })
+
+  document.getElementById("two-time").innerText = `${two}`
+  let four = new Date(new Date().getTime() + plusFour * 60 * 60 * 1000).toLocaleTimeString('en-GB', { timeStyle: 'short' })
+
+  document.getElementById("four-time").innerText = `${four}`
+  let six = new Date(new Date().getTime() + plusSix * 60 * 60 * 1000).toLocaleTimeString('en-GB', { timeStyle: 'short' })
+
+  document.getElementById("six-time").innerText = `${six}`
+  let eight = new Date(new Date().getTime() + plusEight * 60 * 60 * 1000).toLocaleTimeString('en-GB', { timeStyle: 'short' })
+
+  document.getElementById("eight-time").innerText = `${eight}`
+  let clock = document.getElementById("clock")
+
+  clock.innerText = `${new Date(new Date().getTime() + howManyHours * 60 * 60 * 1000).toLocaleTimeString('en-GB', { timeStyle: 'short' })}`;
+
+}
+
+
+function setCurrentDate() {
+
+  let date = new Date();
+  let today = date.getDate() + ' ' + monthNames[(date.getMonth())] + ' ' + date.getFullYear();
+  let clock = document.getElementById("clock")
+
+  clock.innerText = `${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
+
+  document.querySelector('#date').innerHTML = today;
+}
+
+function updateTimeForForecast() {
+
+  let two = new Date(new Date().getTime() + 2 * 60 * 60 * 1000).toLocaleTimeString('en-GB', { timeStyle: 'short' })
+  document.getElementById("two-time").innerText = `${two}`
+
+  let four = new Date(new Date().getTime() + 4 * 60 * 60 * 1000).toLocaleTimeString('en-GB', { timeStyle: 'short' })
+  document.getElementById("four-time").innerText = `${four}`
+
+  let six = new Date(new Date().getTime() + 6 * 60 * 60 * 1000).toLocaleTimeString('en-GB', { timeStyle: 'short' })
+  document.getElementById("six-time").innerText = `${six}`
+
+  let eight = new Date(new Date().getTime() + 8 * 60 * 60 * 1000).toLocaleTimeString('en-GB', { timeStyle: 'short' })
+  document.getElementById("eight-time").innerText = `${eight}`
+
 }
