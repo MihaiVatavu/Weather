@@ -30,7 +30,6 @@ body{
   display:flex;
   justify-content:space-between;
   padding:20px;
-  padding-left:50px;
   margin:20px auto;
   position:relative;
 }
@@ -80,12 +79,16 @@ main{
 .title{
   font-size:11em;
   font-weight: 300;
-  padding-left:50px;
-
+  margin:0 auto;
+ 
   #city{
     // color:$hot-color;
   }
+
+  
 }
+
+
 
 .temperatures{
   position: relative;
@@ -160,7 +163,14 @@ color:$freezing-color;
 .svg-wrapper object{
         display: none;
       }
+   
       
+      main .now,.extremes, .conditions, .forecast{
+        box-shadow: 1px 1px 10px 1px  black;
+        margin:1em 1em;
+        padding:10px;
+      
+      }
 }
 
 
@@ -208,8 +218,15 @@ color:$freezing-color;
       }
     }
 
+    main .now,.extremes, .conditions, .forecast{
+      box-shadow: 1px 1px 10px 1px  black;
+      margin:1em auto;
+      padding:10px;
+    
+    }
+
     .title{
-      font-size:5em;
+      font-size:4em;
       margin:0.6em auto;
     }
 

@@ -24,7 +24,6 @@ body {
       -ms-flex-pack: justify;
           justify-content: space-between;
   padding: 20px;
-  padding-left: 50px;
   margin: 20px auto;
   position: relative;
 }
@@ -73,7 +72,7 @@ main {
 .title {
   font-size: 11em;
   font-weight: 300;
-  padding-left: 50px;
+  margin: 0 auto;
 }
 
 .temperatures {
@@ -138,6 +137,12 @@ main {
   .svg-wrapper object {
     display: none;
   }
+  main .now, .extremes, .conditions, .forecast {
+    -webkit-box-shadow: 1px 1px 10px 1px  black;
+            box-shadow: 1px 1px 10px 1px  black;
+    margin: 1em 1em;
+    padding: 10px;
+  }
 }
 
 @media all and (max-width: 521px) {
@@ -186,8 +191,14 @@ main {
     color: #f0f0f0;
     margin: 5px auto;
   }
+  body main .now, body .extremes, body .conditions, body .forecast {
+    -webkit-box-shadow: 1px 1px 10px 1px  black;
+            box-shadow: 1px 1px 10px 1px  black;
+    margin: 1em auto;
+    padding: 10px;
+  }
   body .title {
-    font-size: 5em;
+    font-size: 4em;
     margin: 0.6em auto;
   }
 }
