@@ -75,9 +75,15 @@ function getDataToday(input) {
 }
 
 function results(weather) {
-
+  console.log(weather)
   const uiCity = document.getElementById('city')
   uiCity.innerText = `${weather.name} `;
+
+  const uiIcon = document.querySelector('.icon img');
+  uiIcon.src = `http://openweathermap.org/img/wn/${weather.weather[0].icon}@4x.png`;
+
+  const uiMood = document.getElementById("mood");
+  uiMood.innerText = `${weather.weather[0].main}`;
 
   const uiCurrent = document.getElementById('now-weather');
   uiCurrent.innerText = `${Math.round(weather.main.temp)}`;
