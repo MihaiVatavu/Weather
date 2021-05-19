@@ -4,6 +4,7 @@
 
 - [Overview](#Overview)
 - [Technologies](#Technologies)
+- [Goal](#Goal)
 
 # Overview
 The idea of the application is simple, you get the current weather conditions for your location(if you allow the browser to get your location) and the temperatures for the next 8 hours. Also you can search for a specific location.
