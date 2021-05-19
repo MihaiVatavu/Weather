@@ -1,4 +1,33 @@
-# Weather Application Practice
-This is a weather app as I needed to practice working with API's.
-I have used the OpenWeatherMap API to get the data I needed.
-For styling I have used a bit of Bootstrap plus custom SCSS.
+# Weather Application
+
+# Contents
+
+- [Overview](#Overview)
+- [Technologies](#Technologies)
+
+# Overview
+The idea of the application is simple, you get the current weather conditions for your location(if you allow the browser to get your location) and the temperatures for the next 8 hours. Also you can search for a specific location.
+
+# Technologies
+
+- HTML
+- SCSS
+- JavaScript
+
+Software
+- VSCode
+- Figma(Trying to create some sort of design)
+
+Data/API
+[OpenWeatherMap](https://openweathermap.org/api)
+
+# Goal
+
+- Practice general coding and problem solving skills
+- Practice more with JavaScript especially 
+  1. Async operations.
+  2. Fetching data from an API
+  3. Displaying data on the UI
+  4. Parctice more Responsive Design
+ 
+ P.S. Yes I know the copywriting isn't the best.
